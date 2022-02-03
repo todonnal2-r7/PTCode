@@ -1,0 +1,6 @@
+Windows Scheduled Tasks
+------------------
+schtasks /create /tn <task name> /tr "C:\Path\to\Program\executable.exe /options" /sc hourly /ed MM/DD/YYY
+
+**If you have local admin authority run this to get SYSTEM level access
+schtasks /create /tn <task name> /tr "C:\Path\to\Program\executable.exe /options" /sc hourly /ed MM/DD/YYY /ru SYSTEM
