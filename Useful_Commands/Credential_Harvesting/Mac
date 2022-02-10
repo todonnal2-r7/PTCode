@@ -1,0 +1,13 @@
+**Extract internet passwords or other login secrets from the current user's keychain:
+
+  security find-internet-password -s getpocket.com -w
+  
+  (WARNING! This will cause confirmation pop-ups on the user's screen asking for their password.)
+  
+**Dump the entire keychain:
+  
+  security dump-keychain
+  
+  (WARNING! This will cause confirmation pop-ups on the user's screen asking for their password.)
+  
+  
