@@ -1,0 +1,25 @@
+This will add an entry in the Windows Registry to launch the implant at startup. 
+Create a .reg file with the contents below and merge it into the registry with:
+
+reg import <.reg filename>
+
+Putting the entry in HKEY_CURRENT_USER will launch the payload when the specific user
+logs in. Putting it in HKEY_LOCAL_MACHINE causes the payload to run at startup. (Local Admin Required!)
+
+IF you only have regular user access:
+
+------File Contents--------
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run]
+"ProgramName"="C:\\Path\\To\\Implant\\Implant.exe /options"
+------End File Contents-----
+
+If you have local admin access:
+
+------File Contents-------
+Windows Registry Editor Version 5.00
+
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run]
+"ProgramName"="C:\\Path\\To\\Implant\\Implant.exe /options"
+------End File Contents--------
