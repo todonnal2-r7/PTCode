@@ -1,0 +1,24 @@
+**To find where a specific file exists on the filesystem:
+
+  dir /S <filename> //Supports wildcards
+
+**To find any Groups.xml files that contain "cpassword" on the Domain Controller's SYSVOL: (For exploiting GPP)
+
+  find /i "cpassword" \\<DC Name or IP>\SYSVOL\*.xml
+
+**To find all files with a specific extension:
+
+  find c:\Path\to\start\from\*.<extension>
+
+**To find all files containing "password":
+
+  find /i "password" c:\Path\to\start\from\*
+    (NOTE: To avoid a lot of garbage output, target specific file types by changing the file extension after the '*')
+
+**To see permissions on files:
+
+  icacls C:\Path\to\files\*
+
+**To find all files owned by a specific user and save the output to a file:
+
+  DIR C:\*.* /S /Q|FIND /i "<username>" > C:\userlist.txt
