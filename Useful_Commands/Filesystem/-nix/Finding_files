@@ -1,0 +1,7 @@
+To find all files owned by a specific user:
+
+find <starting path> -user <username>
+
+To find all files owned by a specific group:
+
+find <starting path> -group <group name>
