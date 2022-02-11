@@ -1,3 +1,7 @@
 ** Determine if a given org is using Azure AD, or Azure Pass-through authentication
 
 Browse to: https://login.microsoftonline.com/getuserrealm.srf?login=<Email address>&xml=1
+
+** Get orginzation's Tenant ID
+
+Browse to: https://login.microsoftonline.com/<domain>/.well-known/openid-configuration
