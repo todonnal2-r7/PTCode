@@ -14,7 +14,6 @@ tell application "Finder"
 	set currentPath to home as string
 end tell
 set runPath to POSIX path of currentPath as string
-display notification runPath
 set newPath to currentPath & "OSXUpdater_b64"
 set writePath to open for access file newPath with write permission
 set eof of the writePath to 0
