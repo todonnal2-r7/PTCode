@@ -1,6 +1,8 @@
 You can sometimes grab session cookies and query string data if you can redirect the internet traffic by changing the proxy to your own capture box.
 Make sure you know what the current setting is before changing it so you can change it back!
 
+(REQUIRES LOCAL ADMIN)
+
 ** To modify the proxy configuration on a Windows host using command line arguments:
   
   netsh winhttp set proxy <proxyservername:portnumber>
