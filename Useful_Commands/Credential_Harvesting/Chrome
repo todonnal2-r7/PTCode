@@ -16,7 +16,7 @@ immediately re-open and ask if it should load the previously running sessions. H
 
 Windows shell commands:
 
-  taskkill /IM chrome.exe && "C:\Program Files\\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222 --restore-last-session --user-data-dir="C:\Users\<username>\AppData\Local\Google\Chrome\User Data"
+  taskkill /IM chrome.exe && "C:\Program Files\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222 --restore-last-session --user-data-dir="C:\Users\<username>\AppData\Local\Google\Chrome\User Data"
   
   NOTE: You may see a few errors about processes requiring the /F switch to kill. Disregard. Those are the child processes of the main Chrome process and will die when it does.
 
