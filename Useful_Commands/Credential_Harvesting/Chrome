@@ -1,4 +1,5 @@
-The following is one method for remotely stealing browser credentials from Chrome. This is also possible with Microsoft Edge which uses the Chromium framework.
+The following is one method for remotely stealing browser cookies from Chrome. 
+This is also possible with Microsoft Edge which uses the Chromium framework.
 
 This method uses the built in Chrome debugging port to snag the cookies after Chrome has already decrypted them.
 
