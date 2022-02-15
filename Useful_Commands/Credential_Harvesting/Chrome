@@ -3,6 +3,8 @@ This is also possible with Microsoft Edge which uses the Chromium framework.
 
 This method uses the built in Chrome debugging port to snag the cookies after Chrome has already decrypted them.
 
+NOTE: If operating through Covenant C2, and possibly others, the PowerShell commands below work much more reliably than the Windows Shell commands. 
+
 First, you'll need a working copy of WhiteChocolateMacadamiaNut: https://github.com/slyd0g/WhiteChocolateMacademiaNut
 This tool is written on Go and can be downloaded and compiled with the following command:
 
