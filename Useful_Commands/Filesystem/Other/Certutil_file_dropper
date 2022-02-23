@@ -1,0 +1,11 @@
+** To get a file onto a host with a restricted environment (No internet, uploading blocked, no command shell, etc)
+** use certutil. 
+
+1. Use certutil to encode the file on your local host:
+
+  certutil -encode <file>
+
+2. Copy and paste the encoded output into a file on the target host
+3. Use certutil on the target host to decode the file:
+ 
+  certutil -decode <file>
