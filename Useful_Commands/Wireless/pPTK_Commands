@@ -1,0 +1,8 @@
+Before doing anything, make sure you've setup a static route to the default gateway! This will avoid you losing access to your PTK after you attempt to connect to an AP using the wifi adapters:
+  ip route <-- To see what the default gateway is
+  route add default gw <gateway IP>
+
+Turn off Networkmanager or it will screw with your Wifi adapters the whole test:
+  Method 1: service NetworkManager stop
+  Method 2: airmon-ng check kill (NOTE: This may not work in some cases, but method 1 has always worked for me.)
+  
