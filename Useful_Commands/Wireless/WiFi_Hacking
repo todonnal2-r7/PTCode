@@ -1,0 +1,10 @@
+To put the wireless adapter in monitor mode:
+  iwconfig <device> mode monitor
+  
+  or
+  
+  airmon-ng start <device>
+  
+To extract PMKID from Airodump .cap file:
+  hcxpcapngtool -o <output filename> <.cap filename>
+  (NOTE: Output files from this command can be cracked in Hashcat with method 22000)
